@@ -1,0 +1,76 @@
+﻿@model Oxygen_Atom.Models.RegisterViewModel
+
+@{
+    ViewBag.Title = "Register";
+}
+<!-- Register Section Start -->
+<div class="register-section section mt-90 mb-90">
+    <div class="container">
+        <div class="row">
+
+            <!-- Register -->
+            <div class="col-md-6 col-12 d-flex">
+                <div class="ee-register">
+
+                    <h3>We will need for your registration</h3>
+                    <p>E&E provide how all this mistaken idea of denouncing pleasure and sing pain born an will give you a complete account of the system, and expound</p>
+
+                    <!-- Register Form -->
+                    @using (Html.BeginForm("Register", "Account"))
+                    {
+                        @Html.ValidationSummary();
+                        <div class="row">
+                            <div class="col-12 mb-30">
+                                @Html.EditorFor(model => model.FirstName, null, new { HtmlAttributes = new { @placeholder = "Type your first name" } })
+                                @Html.ValidationMessageFor(model => model.FirstName)
+                            </div>
+                            <div class="col-12 mb-30">
+                                @Html.EditorFor(model => model.LastName, null, new { HtmlAttributes = new { @placeholder = "Type your last name" } })
+                                @Html.ValidationMessageFor(model => model.LastName)
+                            </div>
+                            <div class="col-12 mb-30">
+                                @Html.EditorFor(model => model.Email, null, new { HtmlAttributes = new { @placeholder = "Type your email address" } })
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </div>
+                            <div class="col-12 mb-30">
+                                @Html.EditorFor(model => model.PhoneNumber, null, new { HtmlAttributes = new { @placeholder = "Type your phone number" } })
+                                @Html.ValidationMessageFor(model => model.PhoneNumber)
+                            </div>
+                            <div class="col-12 mb-30">
+                                @Html.PasswordFor(model => model.Password, new { @placeholder = "Enter your passward" })
+                                @Html.ValidationMessageFor(model => model.Password)
+                            </div>
+                            <div class="col-12 mb-30">
+                                @Html.PasswordFor(model => model.ConfirmPassword, new { @placeholder = "Confirm your passward" })
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                            </div>
+                            <div class="col-12"><input type="submit" value="register"></div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+            <div class="col-md-1 col-12 d-flex">
+
+                <div class="login-reg-vertical-boder"></div>
+
+            </div>
+
+            <!-- Account Image -->
+            <div class="col-md-5 col-12 d-flex">
+
+                <div class="ee-social-login">
+                    <h3>Also you can signup with...</h3>
+
+                    <a href="#" class="facebook-login">Signup with <i class="fa fa-facebook"></i></a>
+                    <a href="#" class="twitter-login">Signup with <i class="fa fa-twitter"></i></a>
+                    <a href="#" class="google-plus-login">Signup with <i class="fa fa-google-plus"></i></a>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div><!-- Register Section End -->

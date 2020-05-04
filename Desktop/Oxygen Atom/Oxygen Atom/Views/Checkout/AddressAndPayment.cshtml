@@ -1,0 +1,97 @@
+﻿@model Oxygen_Atom.Entities.Order
+@{
+    ViewBag.Title = "AddressAndPayment";
+}
+
+<!-- Page Banner Section Start -->
+<div class="page-banner-section section">
+    <div class="page-banner-wrap row row-0 d-flex align-items-center ">
+
+        <!-- Page Banner -->
+        <div class="col-lg-4 col-12 order-lg-2 d-flex align-items-center justify-content-center">
+            <div class="page-banner">
+                <h1>Checkout</h1>
+                <p>similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita</p>
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a href="#">HOME</a></li>
+                        <li><a href="#">Shop</a></li>
+                        <li><a href="#">Checkout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Banner -->
+        <div class="col-lg-4 col-md-6 col-12 order-lg-1">
+            <div class="banner"><a href="#"><img src="assets/images/banner/banner-15.jpg" alt="Banner"></a></div>
+        </div>
+
+        <!-- Banner -->
+        <div class="col-lg-4 col-md-6 col-12 order-lg-3">
+            <div class="banner"><a href="#"><img src="assets/images/banner/banner-14.jpg" alt="Banner"></a></div>
+        </div>
+
+    </div>
+</div><!-- Page Banner Section End -->
+<!-- Checkout Page Start -->
+<div class="page-section section mt-90 mb-30">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+
+                <!-- Checkout Forms-->
+                @using (Html.BeginForm("AddressAndPayment", "Checkout",
+                    FormMethod.Post, new { @class = "checkout-form" }))
+                {
+                    <div class="row row-40">
+                        <div class="col-lg-7 mb-20">
+                            <div id="billing-form" class="mb-40">
+                                <h4 class="checkout-title">Billing Address</h4>
+
+                                <div class="row">
+                                    <div class="col-md-6 col-12 mb-20">
+                                        @Html.EditorFor(model => model.FirstName, null, new { HtmlAttributes = new { @placeholder = "Type your first name" } })
+                                        @Html.ValidationMessageFor(model => model.FirstName)
+                                    </div>
+                                    <div class="col-md-6 col-12 mb-20">
+                                        @Html.EditorFor(model => model.LastName, null, new { HtmlAttributes = new { @placeholder = "Type your first name" } })
+                                        @Html.ValidationMessageFor(model => model.LastName)
+                                    </div>
+                                    <div class="col-md-6 col-12 mb-20">
+                                        @Html.EditorFor(model => model.Email, null, new { HtmlAttributes = new { @placeholder = "Type your email address" } })
+                                        @Html.ValidationMessageFor(model => model.Email)
+                                    </div>
+                                    <div class="col-md-6 col-12 mb-20">
+                                        @Html.EditorFor(model => model.Phone, null, new { HtmlAttributes = new { @placeholder = "Type your phone number" } })
+                                        @Html.ValidationMessageFor(model => model.Phone)
+                                    </div>
+                                    <div class="col-md-6 col-12 mb-20">
+                                        @Html.EditorFor(model => model.Address, null, new { HtmlAttributes = new { @placeholder = "Type your phone number" } })
+                                        @Html.ValidationMessageFor(model => model.Address)
+                                    </div>
+                                    <div class="col-md-6 col-12 mb-20">
+                                        @Html.EditorFor(model => model.City, null, new { HtmlAttributes = new { @placeholder = "Type your phone number" } })
+                                        @Html.ValidationMessageFor(model => model.City)
+                                    </div>
+                                    <div class="col-md-6 col-12 mb-20">
+                                        @Html.EditorFor(model => model.Country, null, new { HtmlAttributes = new { @placeholder = "Type your phone number" } })
+                                        @Html.ValidationMessageFor(model => model.Country)
+                                    </div>
+                                    <div class="col-md-6 col-12 mb-20">
+                                        @Html.EditorFor(model => model.PostalCode, null, new { HtmlAttributes = new { @placeholder = "Type your phone number" } })
+                                        @Html.ValidationMessageFor(model => model.PostalCode)
+                                    </div>
+                                    <button class="place-order" onclick="location.href='@Url.Action("Complete")">Place order</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Checkout Page End -->

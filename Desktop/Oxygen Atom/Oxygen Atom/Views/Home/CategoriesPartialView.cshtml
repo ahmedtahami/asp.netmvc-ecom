@@ -1,0 +1,34 @@
+﻿@using Oxygen_Atom.Models
+@model HomeViewModel
+
+<!-- Header Category Start -->
+<div class="header-category-section">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                    
+                <!-- Header Category -->
+                <div class="header-category">
+                        
+                    <!-- Category Toggle Wrap -->
+                    <div class="category-toggle-wrap d-block d-lg-none">
+                        <!-- Category Toggle -->
+                        <button class="category-toggle">Categories <i class="ti-menu"></i></button>
+                    </div>
+                        
+                    <!-- Category Menu -->
+                    <nav class="category-menu">
+                        <ul>
+                            @foreach (var m in Model.Categories)
+                            {
+                                <li><a href="~/Home/ShopByCategory/@m.Id">@m.Name</a></li>
+                            }
+                        </ul>
+                    </nav>
+                        
+                </div>
+                    
+            </div>
+        </div>
+    </div>
+</div><!-- Header Category End -->

@@ -1,0 +1,29 @@
+﻿@using Oxygen_Atom.Models
+@model HomeViewModel
+
+<div class="main-menu">
+    <nav>
+        <ul>
+            <li class="active"><a href="index.html">HOME</a></li>
+            <li class="menu-item-has-children">
+                <a href="#">SHOP</a>
+                <ul class="mega-menu three-column">
+                    @foreach (var c in Model.SubCategories.Select(x => x.Category).Distinct())
+                    {
+                        <li>
+                            <a href="#">@c.Name</a>
+                            <ul>
+                                @foreach (var s in Model.SubCategories.Where(x => c.Id == x.CategoryId))
+                                {
+                                    <li><a href="~/Home/Products/@s.Id">@s.Name</a></li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </li>
+            <li class="active"><a href="index.html" style="color: #ff0000">SALE</a></li>
+            <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+    </nav>
+</div>

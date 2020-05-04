@@ -1,0 +1,70 @@
+﻿@model List<Oxygen_Atom.Entities.ProductSizes>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Product Sizes</li>
+    </ol>
+    <!-- DataTables Example -->
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-table"></i>
+            Product Sizes Details
+            <p>
+                @Html.ActionLink("Create New", "Create")
+            </p>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>Sr. No.</th>
+                        <th>Product Name</th>
+                        <th>Sizes Available</th>
+                        <th>Quantity</th>
+                        <th>Action</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model)
+                    {
+
+                        <tr>
+                            <td>@(Model.IndexOf(item) + 1)</td>
+                            <td>@item.Product.Name</td>
+                            <td>@item.Sizes.Name</td>
+                            <td>@item.Quantity</td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            </td>
+                        </tr>
+                    }
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function addSizes() {
+        //e.preventDefault();  // this is how to stop the form submitting
+        var val1 = $('#Sizes').val();
+        var sizeName = $("#Sizes option:selected").text();// us an id selector - it is much better performance
+        var val2 = $('#Quantity').val();  // us an id selector - it is much better performance
+        if (val1 != '' && val2 != '') { // check if textbox was empty (not sure what your loop did)
+            $('#dataTable').append('<tbody><tr><td style="display:none;" name="ProductSize.SizeId">' + val1 + '</td><td>' + sizeName + '</td><td name="ProductSize.Quantity">' + val2 + '</td></tr></tbody>');  //apend new row to table
+
+        }
+    }
+</script>

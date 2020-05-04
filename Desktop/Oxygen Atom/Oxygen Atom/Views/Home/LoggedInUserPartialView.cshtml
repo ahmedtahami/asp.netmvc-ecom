@@ -1,0 +1,19 @@
+﻿@using Microsoft.AspNet.Identity
+<div class="col mt-10 mb-10">
+    <!-- Header Links Start -->
+    <div class="header-account-links">
+        @if (Request.IsAuthenticated)
+        {
+            <a href="#"><i class="icofont icofont-user-alt-7"></i> <span>@User.Identity.Name</span></a>
+
+        }
+        else
+        {
+            <a href="~/Account/Register"><i class="icofont icofont-user-alt-7"></i> <span>Register</span></a>
+
+            <a href="~/Account/Login"><i class="icofont icofont-login d-none"></i> <span>Login</span></a>
+
+        }
+
+    </div><!-- Header Account Links End -->
+</div>

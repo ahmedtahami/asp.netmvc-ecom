@@ -1,0 +1,153 @@
+﻿@model Oxygen_Atom.Models.ShoppingCartViewModel
+@{
+    ViewBag.Title = "Index";
+
+    var Total = Model.CartTotal;
+}
+<div id="update-message">
+</div>
+<!-- Cart Page Start -->
+<div class="page-section section pt-90 pb-50">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <form action="#">
+                    <!-- Cart Table -->
+                    <div class="cart-table table-responsive mb-40">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="pro-thumbnail">Image</th>
+                                    <th class="pro-title">Product</th>
+                                    <th class="pro-price">Price</th>
+                                    <th class="pro-quantity">Quantity</th>
+                                    <th class="pro-remove">Remove</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.CartItems)
+                                {
+                                    <tr>
+                                        <td class="pro-thumbnail"><a href="#"><img src="@Url.Content(item.Product.ProductImage1)" width="270px" height="320px" alt="Product"></a></td>
+                                        <td class="pro-title"><a href="#">@item.Product.Name</a></td>
+                                        <td class="pro-price"><span>@item.Product.Price</span></td>
+                                        <td class="pro-quantity" id="item-count-@item.RecordId">@item.Count</td>
+                                        <td class="pro-remove RemoveLink"><a href="#" class="RemoveLink" data-id="@item.RecordId">Remove from cart</a></td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td>
+                                        <b>Sub Total</b>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td id="cart-total">
+                                        @Model.CartTotal
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </form>
+
+                <div class="row">
+
+                    <div class="col-lg-6 col-12 mb-15">
+                        <!-- Calculate Shipping -->
+                        <div class="calculate-shipping">
+                            <h4>Calculate Shipping</h4>
+                            <form action="#">
+                                <div class="row">
+                                    <div class="col-md-6 col-12 mb-25">
+                                        <select class="nice-select">
+                                            <option>Bangladesh</option>
+                                            <option>China</option>
+                                            <option>country</option>
+                                            <option>India</option>
+                                            <option>Japan</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 col-12 mb-25">
+                                        <select class="nice-select">
+                                            <option>Dhaka</option>
+                                            <option>Barisal</option>
+                                            <option>Khulna</option>
+                                            <option>Comilla</option>
+                                            <option>Chittagong</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 col-12 mb-25">
+                                        <input type="text" placeholder="Postcode / Zip">
+                                    </div>
+                                    <div class="col-md-6 col-12 mb-25">
+                                        <input type="submit" value="Estimate">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- Discount Coupon -->
+                        <div class="discount-coupon">
+                            <h4>Discount Coupon Code</h4>
+                            <form action="#">
+                                <div class="row">
+                                    <div class="col-md-6 col-12 mb-25">
+                                        <input type="text" placeholder="Coupon Code">
+                                    </div>
+                                    <div class="col-md-6 col-12 mb-25">
+                                        <input type="submit" value="Apply Code">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Cart Summary -->
+                    <div class="col-lg-6 col-12 mb-40 d-flex">
+                        <div class="cart-summary">
+                            <div class="cart-summary-wrap">
+                                <h4>Cart Summary</h4>
+                                <p>Sub Total <span>@Model.CartTotal</span></p>
+                                <p>Shipping Cost <span>$00.00</span></p>
+                                <h2>Total <span>@Total</span></h2>
+                            </div>
+                            <div class="cart-summary-button">
+                                <button class="checkout-btn" onclick="location.href = '@Url.Action("AddressAndPayment","Checkout")'">Checkout</button>
+                                <button class="update-btn">Update Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Cart Page End -->
+<script src="/Content/js/jquery-1.4.4.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function RemoveFromCart() {
+        // Document.ready -> link up remove event handler
+        $(".RemoveLink").click(function () {
+            // Get the id from the link
+            var recordToDelete = $(this).attr("data-id");
+            if (recordToDelete != '') {
+                // Perform the ajax post
+                $.post("/Cart/RemoveFromCart", { "id": recordToDelete },
+                    function (data) {
+                        // Successful requests get here
+                        // Update the page elements
+                        if (data.ItemCount == 0) {
+                            $('#row-' + data.DeleteId).fadeOut('slow');
+                        } else {
+                            $('#item-count-' + data.DeleteId).text(data.ItemCount);
+                        }
+                        $('#cart-total').text(data.CartTotal);
+                        $('#update-message').text(data.Message);
+                        $('#cart-status').text('Cart (' + data.CartCount + ')');
+                    });
+            }
+        });
+    });
+</script>

@@ -1,0 +1,61 @@
+﻿@model Oxygen_Atom.Models.LoginViewModel
+@{
+    ViewBag.Title = "Admin Login";
+    Layout = null;
+}
+
+<!-- Login Section Start -->
+<div class="login-section section mt-90 mb-90">
+    <div class="container">
+        <div class="row">
+
+            <!-- Login -->
+            <div class="col-md-6 col-12 d-flex">
+                <div class="ee-login">
+
+                    <h3>Admin Login</h3>
+                    <p>E&E provide how all this mistaken idea of denouncing pleasure and sing pain born an will give you a complete account of the system, and expound</p>
+
+                    <!-- Login Form -->
+                    @using (Html.BeginForm("Login", "Account"))
+                    {
+                        <div class="row">
+                            <div class="col-12 mb-30">@Html.EditorFor(model => model.UserName, null, new { HtmlAttributes = new { @placeholder = "Type your username or email address" } })</div>
+                            <div class="col-12 mb-20">@Html.PasswordFor(model => model.Password, new { @placeholder = "Enter your passward" })</div>
+                            <div class="col-12 mb-15">
+                                @Html.CheckBoxFor(model => model.RememberMe)
+                                <label for="RememberMe">Remember me</label>
+                                <a href="#">Forgotten pasward?</a>
+
+                            </div>
+                            <div class="col-12"><input type="submit" value="LOGIN"></div>
+                        </div>
+                    }
+                    <h4>Don’t have account? please click <a href="register">Register</a></h4>
+
+                </div>
+            </div>
+
+            <div class="col-md-1 col-12 d-flex">
+
+                <div class="login-reg-vertical-boder"></div>
+
+            </div>
+
+            <!-- Login With Social -->
+            <div class="col-md-5 col-12 d-flex">
+
+                <div class="ee-social-login">
+                    <h3>Also you can login with...</h3>
+
+                    <a href="#" class="facebook-login">Login with <i class="fa fa-facebook"></i></a>
+                    <a href="#" class="twitter-login">Login with <i class="fa fa-twitter"></i></a>
+                    <a href="#" class="google-plus-login">Login with <i class="fa fa-google-plus"></i></a>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div><!-- Login Section End -->

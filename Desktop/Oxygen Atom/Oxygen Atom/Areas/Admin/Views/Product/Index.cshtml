@@ -1,0 +1,77 @@
+﻿@model List<Oxygen_Atom.Entities.Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Products</li>
+    </ol>
+    <!-- DataTables Example -->
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-table"></i>
+            Product Details
+            <p>
+                @Html.ActionLink("Create New", "Create")
+            </p>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Sr. No.</th>
+                            <th>Id</th>
+                            <th>Product Name</th>
+                            <th>Category Name</th>
+                            <th>SubCategory Name</th>
+                            <th>Price</th>
+                            <th>Launch Date</th>
+                            <th>Featured</th>
+                            <th>Descrition</th>
+                            <th>Product Image1</th>
+                            <th>Product Image2</th>
+                            <th>Product Image3</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td>@(Model.IndexOf(item) + 1)</td>
+                                <td>@item.Id</td>
+                                <td>@item.Name</td>
+                                <td>@item.Category.Name</td>
+                                <td>@item.SubCategory.Name</td>
+                                <td>@item.Price</td>
+                                <td>@item.StartDate</td>
+                                <td>@item.IsFeatured</td>
+                                <td>@item.Description</td>
+                                <td>@item.ProductImage1</td>
+                                <td>@item.ProductImage2</td>
+                                <td>@item.ProductImage3</td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+

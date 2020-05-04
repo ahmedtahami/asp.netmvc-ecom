@@ -1,0 +1,140 @@
+﻿@model Pharmacia.Models.ProductViewModel
+
+
+@{
+    HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
+    var save = Model.Products.RRP - Model.ProductPrice.RetailPrice;
+}
+
+<div class="modal-dialog modal-dialog-centered" role="document">
+    @Html.HiddenFor(model => model.Products.Id)
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span class="cross" aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+
+            <div class="row row-height">
+                <div class="col-md-6 img-parent">
+                    <img class="product-image h-w" height="250" width="250"
+                         src="@Url.Content(Model.Products.Image)"
+                         alt="@Model.Products.Description">
+                </div>
+                <div class="col-md-6">
+                    @if (cookie != null && cookie.Value != null)
+                    {
+                        if (cookie.Value == "en")
+                        {
+                            <p class="b-bot"><strong>@Model.Products.Category.Name</strong><span> > @Model.Products.SubCategory.Name</span></p>
+                            <h5 class="head-blue">@Model.Products.Name</h5>
+                        }
+                        else
+                        {
+                            <p class="b-bot"><strong>@Model.Products.Category.NameChinese</strong><span> > @Model.Products.SubCategory.NameChinese</span></p>
+                            <h5 class="head-blue">@Model.Products.NameChinese</h5>
+                        }
+                    }
+                    else
+                    {
+                        <p class="b-bot"><strong>@Model.Products.Category.Name</strong><span> > @Model.Products.SubCategory.Name</span></p>
+                        <h5 class="head-blue">@Model.Products.Name</h5>
+
+                    }
+                    <h5 class="head-blue">@Pharmacia.Resources.HomeLang.Price: $ @Model.ProductPrice.RetailPrice</h5>
+                    <div class="discount" style="font-size: 14px">
+                        <span style="text-decoration: line-through">@Pharmacia.Resources.HomeLang.RRP: $ @Model.Products.RRP</span> <br>
+                        <span>@Pharmacia.Resources.HomeLang.Save: $ @save</span>
+                    </div>
+                    <br>
+                    <button class="btn-p minus btn-d btn-d-minus" onclick="var effect = document.getElementById('Count'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;">-</button>
+                    <input type="number" class="qty-text text-qty" id="Count" step="1" min="1" max="99" name="Count" value="1">
+                    <button class="btn-p btn-d btn-d-plus" onclick="var effect = document.getElementById('Count'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;">+</button>
+                    <br>
+
+                    <a onclick="DetailsAddToCart(this);" id="ProductDetails_@Model.Products.Id" data-id="@Model.Products.Id" class="btn btn-default btn-custom" style="border-radius: 0;color:white;"> @Pharmacia.Resources.HomeLang.Add @Pharmacia.Resources.HomeLang.To @Pharmacia.Resources.HomeLang.Cart</a>
+                    <a onclick="DetailsBuyNow(this);" id="ProductDetails_@Model.Products.Id" data-id="@Model.Products.Id" class="btn btn-default btn-custom-buy" style="border-radius: 0;color:white;">@Pharmacia.Resources.HomeLang.Buy @Pharmacia.Resources.HomeLang.Now</a>
+                    <p class="b-bot">
+                        <strong>@Pharmacia.Resources.HomeLang.Description</strong><span></span>
+
+                        @{ if (cookie != null && cookie.Value != null)
+                            {
+                                if (cookie.Value == "en")
+                                {
+                                <p style="font-size: 14px">@Model.Products.Description</p>
+
+
+                            }
+                            else
+                            {
+
+                                <p style="font-size: 14px">@Model.Products.DescriptionChinese</p>
+
+                            }
+                        }
+                        else
+                        {
+
+                            <p style="font-size: 14px">@Model.Products.Description</p>
+                        }
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <script type="text/javascript">
+    function DetailsAddToCart(clickedElement) {
+        var dataid = $(clickedElement).attr("data-id");
+        addToCartAjax(dataid);
+    }
+    function addToCartAjax(id)
+    {
+        var link = '@Url.Action("AddToCart", "ShopingCart")';
+        var id = $('#Products_Id').val();
+        var count = $('#Count').val();
+        var req = { Id: id, Count: count };
+        var data = JSON.stringify(req);
+    $.ajax({
+        type: 'Post',
+        contentType: 'application/json;charset=utf-8',
+        dataType: 'Json',
+        url: link,
+        data: data,
+        success: function (data) {
+                window.location.href = "/Home/Index";
+            },
+        error: function (data) {
+            }
+        });
+    }
+    function DetailsBuyNow(clickedElement) {
+        var dataid = $(clickedElement).attr("data-id");
+        BuyNowAjax(dataid);
+    }
+    function BuyNowAjax(id)
+    {
+        var link = '@Url.Action("AddToCart", "ShopingCart")';
+        var id = $('#Products_Id').val();
+        var count = $('#Count').val();
+        var req = { Id: id, Count: count };
+    $.ajax({
+        type: 'Post',
+        contentType: 'application/json;charset=utf-8',
+            dataType: 'Json',
+            url: link,
+            data: JSON.stringify(req),
+        success: function (data) {
+                window.location.href = "/ShopingCart/Index";
+            },
+        error: function (data) {
+            }
+        });
+    }
+
+    </script>
